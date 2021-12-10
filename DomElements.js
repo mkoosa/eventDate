@@ -1,7 +1,11 @@
 
 
-export const WRAPPER_SPAN_PARAGRAPH_ID = `span-paragraph`;
-export const WRAPPER_INPUT_ID = `wrapper-input`;
+export const WRAPPER_INPUT_NAME_ID = `eventName-input`;
+export const SPAN_EVENT_NAME_ID = `span-eventName-paragraph`;
+
+export const WRAPPER_INPUT_DATE_ID = `eventDate-input`;
+export const SPAN_EVENT_DATE_ID = `span-eventDate-paragraph`;
+
 export const BUTTON_ID = `button`;
 export const WARNING_PARAGRAPH_ID = `warning-paragraph`;
 
@@ -25,8 +29,6 @@ export class DomElements {
 
         return element
     }
-
-
 
 }
 
