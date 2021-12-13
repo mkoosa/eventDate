@@ -44,6 +44,14 @@ html {
 	color: #000;
 }
 
+.wrapper__comment-paragraph{
+	color: #bbb;
+	margin-bottom: 1rem;
+	font-weight: 500;
+	letter-spacing: .1rem;
+}
+
+
 .wrapper__btn {
     display: flex;
     align-items: center;

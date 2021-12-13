@@ -8,61 +8,59 @@ export class InterfaceUser extends DomElements {
         super();
         this.bindToElements()
         this.event = null;
+        this.event = new Event();
         this.pressButton();
+
     }
 
     bindToElements() {
         this.eventNameArray = [];
-        this.eventDateArray = [];
-
+        this.evenDateArray = [];
         this.inputName = this.bindToElement(WRAPPER_INPUT_NAME_ID);
         this.inputDate = this.bindToElement(WRAPPER_INPUT_DATE_ID);
-
         this.spanParagraphName = this.bindToElement(SPAN_EVENT_NAME_ID);
         this.spanParagraphDate = this.bindToElement(SPAN_EVENT_DATE_ID)
         this.warningParagraph = this.bindToElement(WARNING_PARAGRAPH_ID)
-
         this.button = this.bindToElement(BUTTON_ID);
-        console.log(this);
+
         this.getEventNameFromInput();
         this.getEventDateFromInput();
+
 
     }
 
     getEventNameFromInput() {
         this.inputName.addEventListener('keyup', (e) => {
+            // @ts-ignore
             let eventName = e.target.value;
-            this.pushEventName(eventName);
 
         })
-    }
-
-    pushEventName(name) {
-        this.eventNameArray.push(name)
-
     }
 
     getEventDateFromInput() {
         this.inputDate.addEventListener('keyup', (e) => {
+            // @ts-ignore
             let eventDate = e.target.value;
-            this.pushEventDate(eventDate);
+            this.evenDateArray.push(eventDate);
+            this.evenDateArray.splice(0, this.evenDateArray.length - 1);
+            this.dateEventWithoutDot(this.evenDateArray.join(' '));
 
         })
     }
 
-    pushEventDate(name) {
-        this.eventDateArray.push(name)
-
-    }
-
-    createEvent() {
-        this.event = new Event();
+    dateEventWithoutDot(value) {
+        let stringDataValue = '';
+        for (let i = 0; i < value.length; i++) {
+            if(value[i] !== '.'){
+                stringDataValue += value[i]
+            }
+        }
+        console.log(stringDataValue);
 
     }
 
     pressButton() {
         this.button.addEventListener('click', () => {
-            this.createEvent()
             this.fillEvent()
             this.clearInput();
             this.clearArrayOfEvents();
@@ -71,25 +69,30 @@ export class InterfaceUser extends DomElements {
 
     fillEvent() {
         let arrayName = this.eventNameArray;
-        let arrayDate = this.eventDateArray;
+        // @ts-ignore
         this.event.name = arrayName[arrayName.length - 1];
-        this.event.date = arrayDate[arrayDate.length - 1];
+
     }
 
     clearInput() {
+        // @ts-ignore
         this.inputDate.value = '';
+        // @ts-ignore
         this.inputName.value = '';
     }
 
     clearArrayOfEvents() {
         this.eventNameArray.length = 0;
-        this.eventDateArray.length = 0;
+        console.log(this.event);
 
     }
 
 }
 
 
+// @ts-ignore
 const interfaceUser = new InterfaceUser();
+
+
 
 
