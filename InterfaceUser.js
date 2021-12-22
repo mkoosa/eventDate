@@ -1,11 +1,13 @@
 import { DomElements } from './DomElements.js'
 import { WRAPPER_INPUT_NAME_ID, SPAN_EVENT_NAME_ID, WRAPPER_INPUT_DATE_ID, SPAN_EVENT_DATE_ID, BUTTON_ID, WARNING_PARAGRAPH_ID } from './DomElements.js';
 import { Event } from './Event.js';
+// import { MyDate } from './myDate.js';
 
 export class InterfaceUser extends DomElements {
     constructor() {
         super();
         this.event = new Event();
+        
         this.bindToElements()
         this.pressButton();
         this.getEventNameFromInput();
@@ -42,7 +44,11 @@ export class InterfaceUser extends DomElements {
             console.log('click');
             console.log(this.event);
             this.event.showWarningMessage();
+            this.event.createCurrentTime();
+            console.log(this.event.eventDate);
+            console.log(this.event.currentTime);
         })
+        
     }
 
     getEventDateFromInput() {
@@ -53,10 +59,7 @@ export class InterfaceUser extends DomElements {
         if (!this.eventDateHandler) {
             let eventDate = []
             this.eventDateHandler = (e) => {
-               console.log(e.target.value);
-            //    console.log('tutaj', this.event.controlEventDataValue(e.target.value));
                 eventDate.push(e.target.value)
-               
                 this.event.cutDate(eventDate);
             }
         }
@@ -69,3 +72,4 @@ export class InterfaceUser extends DomElements {
 // @ts-ignore
 
 export const interfaceUser = new InterfaceUser();
+
