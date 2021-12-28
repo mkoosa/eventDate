@@ -1,5 +1,7 @@
 import { interfaceUser } from "./InterfaceUser.js";
-// import { MyDate } from "./myDate.js";
+
+import { LeftTimeToEvent } from "./LeftTime.js";
+
 
 export class Event {
     constructor(name, day, mounth, year) {
@@ -7,7 +9,6 @@ export class Event {
         this.day = day;
         this.mounth = mounth;
         this.year = year;
-        this.eventDate = null
 
     }
     getName(value) {
@@ -21,49 +22,48 @@ export class Event {
     }
 
     getMounth(value) {
-        this.mounth = this.createNumber(value)
+        this.mounth = this.createNumber(value);
         return this.mounth;
     }
 
     getYear(value) {
-        this.year = this.createNumber(value)
+        this.year = this.createNumber(value);
         return this.year;
+    }
+
+    createEvent(value) {
+
+        if (value.length === 10) {
+
+            value = this.removeEmptyValueFromArray(value);
+            this.showWarningMessage();
+        }
+    }
+
+    createEventTime() {
+        const evenTime = new Date(this.year, this.mounth - 1, this.day);
+        return evenTime;
+
     }
 
     createCurrentTime() {
         this.currentTime = new Date();
-        // console.log(this.currentTime);
+        console.log('obenie mamy', this.currentTime);
 
-    }
-
-    createEventTime(value) {
-        if (value.length === 10) {
-
-            // value = value.filter((el) => true)
-
-            value = this.removeEmptyValueFromArray(value);
-            console.log(value);
-
-            const day = value.slice(0, 2).reduce(this.reducer);
-            const mounth = value.slice(2, 4).reduce(this.reducer);
-            const year = value.slice(4, 8).reduce(this.reducer);
-            this.eventDate = new Date(year, mounth, day);
-
-        }
     }
 
     reducer(previous, current) {
-        return previous + current
+        return previous + current;
 
     }
 
     createNumber(value) {
         let partOfDay = '';
         for (let i = 0; i < value.length; i++) {
-            partOfDay += value[i]
+            partOfDay += value[i];
         }
 
-        return +partOfDay
+        return +partOfDay;
     }
 
     correctElementFromArray(value, index) {
@@ -73,51 +73,50 @@ export class Event {
     }
 
     cutDate(value) {
+        // debugger
         value = this.correctElementFromArray(value);
-        let dateToCut = []
+        let dateToCut = [];
         let date = value.join();
         let valueLength = date.length;
 
         for (let i = 0; i < date.length; i++) {
             if (date[i] !== '.') {
-                dateToCut[i] = date[i]
+                dateToCut[i] = date[i];
             }
         }
-        
-        this.createEventTime(dateToCut)
+
+        this.createEvent(dateToCut);
         this.controlEventDataValue(dateToCut);
-
-        dateToCut =  this.removeEmptyValueFromArray(dateToCut);
+        dateToCut = this.removeEmptyValueFromArray(dateToCut);
         this.controlEventDateLength(dateToCut);
-
         this.getDay(dateToCut.splice(0, 2));
         this.getMounth(dateToCut.splice(0, 2));
         this.getYear(dateToCut.splice(0, 4));
+
     }
 
     removeEmptyValueFromArray(array) {
-        return array.filter((el) => true)
+        return array.filter((el) => true);
 
     }
 
     controlEventDateLength(value) {
         if (value.length >= 8) {
-            interfaceUser.inputDate.removeEventListener('keyup', interfaceUser.eventDate())
+            interfaceUser.inputDate.removeEventListener('keyup', interfaceUser.eventDate());
         }
 
     }
+
     showWarningMessage() {
         if (!this.name || !this.day || !this.mounth || !this.year) {
             console.log('cos jest nie tak');
         }
-
     }
 
     controlEventDataValue(value) {
         for (let i = 0; i < value.length; i++) {
             let correctValue = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'].includes(value[i]);
-            return correctValue
-
+            return correctValue;
         }
 
     }

@@ -1,13 +1,15 @@
 import { DomElements } from './DomElements.js'
 import { WRAPPER_INPUT_NAME_ID, SPAN_EVENT_NAME_ID, WRAPPER_INPUT_DATE_ID, SPAN_EVENT_DATE_ID, BUTTON_ID, WARNING_PARAGRAPH_ID } from './DomElements.js';
 import { Event } from './Event.js';
-// import { MyDate } from './myDate.js';
+import { LeftTimeToEvent } from './LeftTime.js';
+
 
 export class InterfaceUser extends DomElements {
     constructor() {
         super();
         this.event = new Event();
-        
+        this.eventTime = null;
+        this.leftTimeToEvent = null;
         this.bindToElements()
         this.pressButton();
         this.getEventNameFromInput();
@@ -32,39 +34,51 @@ export class InterfaceUser extends DomElements {
             this.eventNameHandler = (e) => {
                 let eventName = [];
                 eventName.push(e.target.value);
-                this.event.getName(eventName)
+                this.event.getName(eventName);
             }
-            return this.eventNameHandler
+            return this.eventNameHandler;
         }
 
     };
 
     pressButton() {
         this.button.addEventListener('click', () => {
-            console.log('click');
-            console.log(this.event);
+
             this.event.showWarningMessage();
             this.event.createCurrentTime();
-            console.log(this.event.eventDate);
-            console.log(this.event.currentTime);
+            this.event.createEventTime();
+            this.leftTimeToEvent = new LeftTimeToEvent();
+            this.eventValues = this.leftTimeToEvent.createMsValues([this.event.currentTime.getTime(), this.event.createEventTime().getTime()]);
+            this.displayEventValues(this.eventValues);
         })
-        
+
+    }
+
+    displayEventValues({ mounths, days, hours, minutes, seconds }) {
+
+
+        console.log('miesiace', mounths);
+        console.log('dni', days);
+        console.log('godziny', hours);
+        console.log('minuty', minutes);
+        console.log('secundy', seconds);
+
     }
 
     getEventDateFromInput() {
-        this.inputDate.addEventListener('keyup', this.eventDate())
+        this.inputDate.addEventListener('keyup', this.eventDate());
     }
 
     eventDate() {
         if (!this.eventDateHandler) {
-            let eventDate = []
+            let eventDate = [];
             this.eventDateHandler = (e) => {
-                eventDate.push(e.target.value)
+                eventDate.push(e.target.value);
                 this.event.cutDate(eventDate);
             }
         }
 
-        return this.eventDateHandler
+        return this.eventDateHandler;
     }
 
 }
