@@ -34,9 +34,8 @@ export class Event {
     createEvent(value) {
 
         if (value.length === 10) {
-
             value = this.removeEmptyValueFromArray(value);
-            this.showWarningMessage();
+
         }
     }
 
@@ -110,8 +109,12 @@ export class Event {
     showWarningMessage() {
         if (!this.name || !this.day || !this.mounth || !this.year) {
             console.log('cos jest nie tak');
+            interfaceUser.warningParagraph.textContent = 'Upps, not Correct format';
+            interfaceUser.warningParagraph.style.color = 'red';
+            interfaceUser.warningParagraph.style.fontSize = '2rem';
         }
     }
+
 
     controlEventDataValue(value) {
         for (let i = 0; i < value.length; i++) {

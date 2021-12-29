@@ -45,16 +45,37 @@ export class InterfaceUser extends DomElements {
         this.button.addEventListener('click', () => {
 
             this.event.showWarningMessage();
-            this.event.createCurrentTime();
-            this.event.createEventTime();
-            this.leftTimeToEvent = new LeftTimeToEvent();
-            this.eventValues = this.leftTimeToEvent.createMsValues([this.event.currentTime.getTime(), this.event.createEventTime().getTime()]);
-            this.displayEventValues(this.eventValues);
+            setInterval(() => {
+                this.timeToDisplay()
+
+            }, 1000);
+
         })
 
     }
 
-    displayEventValues({ mounths, days, hours, minutes, seconds }) {
+
+    timeToDisplay = () => {
+        this.event.createCurrentTime();
+        this.event.createCurrentTime();
+        this.event.createEventTime();
+        this.leftTimeToEvent = new LeftTimeToEvent();
+        this.eventValues = this.leftTimeToEvent.createMsValues([this.event.currentTime.getTime(), this.event.createEventTime().getTime()]);
+        this.displayEventValues(this.eventValues);
+
+    }
+
+
+    displayEventValues = ({ mounths, days, hours, minutes, seconds }) => {
+
+
+        interfaceUser.warningParagraph.textContent = `${mounths} mounts ${days} dni ${hours} hours ${minutes} minut ${seconds}
+        seconds do ${this.event.name}`;
+        interfaceUser.warningParagraph.style.fontSize = '2rem';
+        interfaceUser.warningParagraph.style.color = 'black';
+
+        this.event.showWarningMessage();
+
 
 
         console.log('miesiace', mounths);
@@ -62,6 +83,7 @@ export class InterfaceUser extends DomElements {
         console.log('godziny', hours);
         console.log('minuty', minutes);
         console.log('secundy', seconds);
+        console.log(this.event.name);
 
     }
 

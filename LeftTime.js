@@ -10,7 +10,7 @@ export class LeftTimeToEvent {
 
     createMsValues(value) {
         const [currentMs, eventMs] = value;
-        const timeDifference = eventMs - currentMs; // roznica w ms 
+        const timeDifference = eventMs - currentMs;
 
         const eMounthsToDate = timeDifference / MS_IN_MOUNTHS;
         const mounthsToDate = Math.floor(eMounthsToDate);
@@ -28,6 +28,8 @@ export class LeftTimeToEvent {
 
         const eSecundsToDate = (eMinutesToDate - minutesToDate) *60;
         const secundsTodate = Math.floor(eSecundsToDate);
+
+        console.log(' sie odnawa', secundsTodate);
 
         return {
             mounths: mounthsToDate,
