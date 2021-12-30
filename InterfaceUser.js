@@ -3,7 +3,6 @@ import { WRAPPER_INPUT_NAME_ID, SPAN_EVENT_NAME_ID, WRAPPER_INPUT_DATE_ID, SPAN_
 import { Event } from './Event.js';
 import { LeftTimeToEvent } from './LeftTime.js';
 
-
 export class InterfaceUser extends DomElements {
     constructor() {
         super();
@@ -14,6 +13,7 @@ export class InterfaceUser extends DomElements {
         this.pressButton();
         this.getEventNameFromInput();
         this.getEventDateFromInput();
+        this.flagBtn = true;
     }
 
     bindToElements() {
@@ -38,53 +38,56 @@ export class InterfaceUser extends DomElements {
             }
             return this.eventNameHandler;
         }
-
     };
 
     pressButton() {
         this.button.addEventListener('click', () => {
-
             this.event.showWarningMessage();
-            setInterval(() => {
-                this.timeToDisplay()
-
-            }, 1000);
-
+            if (this.flagBtn) {
+                this.eventInterval = setInterval(() => {
+                    this.timeToDisplay()
+                    this.flagBtn = false;
+                    
+                }, 1000);
+            }
+            this.createResetButton();
         })
-
     }
-
 
     timeToDisplay = () => {
         this.event.createCurrentTime();
         this.event.createCurrentTime();
         this.event.createEventTime();
         this.leftTimeToEvent = new LeftTimeToEvent();
-        this.eventValues = this.leftTimeToEvent.createMsValues([this.event.currentTime.getTime(), this.event.createEventTime().getTime()]);
+     
+        let currentTimeinMS = this.event.currentTime.getTime();
+        let eventTimeInMS = this.event.createEventTime().getTime();
+     
+        this.eventValues = this.leftTimeToEvent.createMsValues([currentTimeinMS,eventTimeInMS]);
         this.displayEventValues(this.eventValues);
+     
+        this.event.showWarningMessage(currentTimeinMS, eventTimeInMS)
+        
 
     }
 
+    resetEvents = () => {
+        location.reload()
+
+    }
+
+    createResetButton = () => {
+        this.button.textContent = 'clear';
+        this.button.addEventListener('click', this.resetEvents)
+
+    }
 
     displayEventValues = ({ mounths, days, hours, minutes, seconds }) => {
-
-
         interfaceUser.warningParagraph.textContent = `${mounths} mounts ${days} dni ${hours} hours ${minutes} minut ${seconds}
-        seconds do ${this.event.name}`;
-        interfaceUser.warningParagraph.style.fontSize = '2rem';
-        interfaceUser.warningParagraph.style.color = 'black';
-
+        seconds to ${this.event.name}`;
+        interfaceUser.warningParagraph.style.fontSize = '1.2rem';
+        interfaceUser.warningParagraph.style.color = 'red';
         this.event.showWarningMessage();
-
-
-
-        console.log('miesiace', mounths);
-        console.log('dni', days);
-        console.log('godziny', hours);
-        console.log('minuty', minutes);
-        console.log('secundy', seconds);
-        console.log(this.event.name);
-
     }
 
     getEventDateFromInput() {

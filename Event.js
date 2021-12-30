@@ -1,6 +1,7 @@
 import { interfaceUser } from "./InterfaceUser.js";
 
-import { LeftTimeToEvent } from "./LeftTime.js";
+// import { LeftTimeToEvent } from "./LeftTime.js";
+
 
 
 export class Event {
@@ -41,13 +42,14 @@ export class Event {
 
     createEventTime() {
         const evenTime = new Date(this.year, this.mounth - 1, this.day);
+        // console.log(object);
         return evenTime;
 
     }
 
     createCurrentTime() {
         this.currentTime = new Date();
-        console.log('obenie mamy', this.currentTime);
+
 
     }
 
@@ -106,12 +108,20 @@ export class Event {
 
     }
 
-    showWarningMessage() {
-        if (!this.name || !this.day || !this.mounth || !this.year) {
-            console.log('cos jest nie tak');
-            interfaceUser.warningParagraph.textContent = 'Upps, not Correct format';
+    showWarningMessage(currentTimeinMS, eventTimeInMS) {
+
+        if (!this.name || !this.day || !this.mounth || !this.year || currentTimeinMS > eventTimeInMS) {
+
+            if (currentTimeinMS > eventTimeInMS) {
+                interfaceUser.warningParagraph.textContent = 'Upps, to early';
+            } else {
+                interfaceUser.warningParagraph.textContent = 'Upps, not Correct format';
+            }
             interfaceUser.warningParagraph.style.color = 'red';
             interfaceUser.warningParagraph.style.fontSize = '2rem';
+            clearInterval(interfaceUser.eventInterval)
+
+
         }
     }
 
