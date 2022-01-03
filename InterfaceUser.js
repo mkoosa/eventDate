@@ -2,6 +2,7 @@ import { DomElements } from './DomElements.js'
 import { WRAPPER_INPUT_NAME_ID, SPAN_EVENT_NAME_ID, WRAPPER_INPUT_DATE_ID, SPAN_EVENT_DATE_ID, BUTTON_ID, WARNING_PARAGRAPH_ID } from './DomElements.js';
 import { Event } from './Event.js';
 import { LeftTimeToEvent } from './LeftTime.js';
+// import { LeftTimeToEvent } from "."
 
 export class InterfaceUser extends DomElements {
     constructor() {
